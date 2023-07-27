@@ -1,0 +1,48 @@
+html{
+    height: 100vh;
+}
+.nav-bar{
+    background-color: rgb(0, 0, 0);
+    width: 100;
+    height: 75vh;
+    float: left;
+    overflow: hidden;
+    text-align: left;
+}
+.nav-dropdown-list:hover .nav-dropdown-list-item{
+    display: block;
+
+}
+ul{
+    padding: 0px;
+}
+.nav-dropdown-list li{
+    color:rgb(0, 150, 250);
+    list-style: none;
+    margin-top: 50px;
+    font-size: larger;
+    padding-left: 17px;
+}
+.nav-dropdown{
+    background-color: black;
+    height: 100px;
+    min-height: 20px;
+    width: 100px;
+}
+.section1{
+    /*border: 2px brown dotted; */
+    width: 95%;
+    text-align: center;
+}
+.projects{
+    margin-left: 20%;
+    margin-right: 20%;
+    background-color: burlywood;
+    width: 80%;
+    margin-top: 40px;
+}
+.project-picture{
+    background-color: lightgrey;
+    height: 160px;
+    width: 120px;
+}
