@@ -43,6 +43,8 @@ ul{
 }
 .project-picture{
     background-color: lightgrey;
-    height: 160px;
-    width: 120px;
+    height: inherit;
+    width: 200px;
+    margin-left: 50px;
+    padding-top: 200px;;
 }
