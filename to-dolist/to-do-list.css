@@ -1,0 +1,42 @@
+.add-remove{
+    text-align: center;
+    margin-top: 50px;
+}
+.add, .remove{
+    display: inline-block;
+    height: 50px;
+    width: 100px;
+    font-size: large;
+    transition: .25s ease-in-out;
+}
+.add:hover, .remove:hover{
+    filter:saturate(3);
+}
+.add{
+    background-color: lightgreen;
+    margin-right: 30%;
+}
+.remove{
+    background-color: red;
+}
+.container{ /* container that will hold the contents*/
+    height: 50%;
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+#checkbox, #goal{
+    margin-left: 50px;
+}
+/* Increase the size of the checkbox */
+input[type="checkbox"] {
+    /* Set the desired width and height */
+    width: 60px;
+    height: 60px;
+    margin-top: 60px;
+  }
+  #goal{
+    font-size: xx-large;
+    height: 50px;
+    width: 600px;
+  }
