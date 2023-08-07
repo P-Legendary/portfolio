@@ -1,0 +1,28 @@
+:root{
+    --grid-color: #D9D9D9D9;
+    --sub-grid-height: 360px;
+    --sub-grid-box-height: 120px;
+}
+.grid, .sub-grid{
+    display: grid;
+}
+.grid{
+    background-color: var(--grid-color);
+    height: fit-content;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    grid-template-columns: repeat(3, 1fr);
+}
+.sub-grid{
+    border: 5px black solid;
+    width: var(--sub-grid-height);
+    height: var(--sub-grid-height);
+    grid-template-columns: auto auto auto;
+
+}
+.sub-grid-box{
+    height: var(--sub-grid-box-height);
+    width: var(--sub-grid-box-height);
+    border: 1px black solid;
+}
