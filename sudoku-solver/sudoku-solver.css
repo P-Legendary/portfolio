@@ -3,10 +3,10 @@
     --sub-grid-height: 360px;
     --sub-grid-box-height: 120px;
 }
-.grid, .sub-grid{
+.grid, .sub-grid, .grid2{
     display: grid;
 }
-.grid{
+.grid, .grid2{
     background-color: var(--grid-color);
     height: fit-content;
     width: fit-content;
@@ -25,4 +25,13 @@
     height: var(--sub-grid-box-height);
     width: var(--sub-grid-box-height);
     border: 1px black solid;
+    font-size: xx-large;
+}
+#max, #submit-max-number{
+    float: right;
+ 
+}
+#max{
+    width: fit-content;
+    font-size: x-large;
 }
