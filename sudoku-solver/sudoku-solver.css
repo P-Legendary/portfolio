@@ -13,12 +13,14 @@
     margin-left: auto;
     margin-right: auto;
     grid-template-columns: repeat(3, 1fr);
+    overflow: auto;
 }
 .sub-grid{
     border: 5px black solid;
     width: var(--sub-grid-height);
     height: var(--sub-grid-height);
-    grid-template-columns: auto auto auto;
+    overflow: auto;
+    /*grid-template-columns: auto auto auto; */
 
 }
 .sub-grid-box{
@@ -26,12 +28,18 @@
     width: var(--sub-grid-box-height);
     border: 1px black solid;
     font-size: xx-large;
+    text-align: center;
+    font-size: 75px;
+    background: transparent;
 }
-#max, #submit-max-number{
+#max, #submit-max-number, #clear{
     float: right;
+    margin-left: 12.5px;
  
 }
+#clear, #submit-max-number{
+    font-size: x-large;
+}
 #max{
-    width: fit-content;
     font-size: x-large;
 }
