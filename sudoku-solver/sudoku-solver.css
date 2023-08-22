@@ -31,6 +31,7 @@
     text-align: center;
     font-size: 75px;
     background: transparent;
+    margin: auto;
 }
 #max, #submit-max-number, #clear{
     float: right;
