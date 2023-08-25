@@ -4,6 +4,7 @@ window.onload= e => {
     var sumbmitMax= document.getElementById("submit-max-number");
     var clear= document.getElementById("clear");
     var createdGrids= false;
+    var maxInputbox= document.getElementById("max");
     
     // we need for loop so we can make the little boxes in the sudoku puzzle
     function createGrids(){ // maybe in the future the grid will be self aware/like daedelus labyrinth
@@ -64,6 +65,17 @@ window.onload= e => {
         }
         console.log(biggestNum, createdGrids);
     });
+    maxInputbox.addEventListener("keydown", event =>{
+        console.log(event);
+        if (event.key=="Enter"){
+            let clickEvent = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window});
+            maxInputbox.dispatchEvent(clickEvent);
+            // this is a work in progress...
+        }
+    })
 
 
 }
