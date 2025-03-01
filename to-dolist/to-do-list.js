@@ -1,69 +1,173 @@
-window.onload = e =>{
-    var containerNode= document.getElementById("container");
-    var divToRemove=null;
-    var checkNode=null;
-    var textAreaNode=null;
-    var removeButton= document.getElementById("remove");
-    var addButton= document.getElementById("add");
-    var idNumber=1;
-    const userData= localStorage;
+console.log("JavaScript file loaded");
 
-    function checkUserData(){
-        userData.removeItem("one", "toOne");
-        console.log(userData);
+window.onload = () => {
+    const containerNode = document.getElementById("container");
+    const removeButton = document.getElementById("remove");
+    const addButton = document.getElementById("add");
+    const darkAndLightNode = document.getElementById("dark-and-light");
+    const broomNode = document.getElementById("broom");
+    const noAnimationNode = document.getElementById("suspended-animation");
 
-        for (let key in userData){
-            if (typeof key==="string" && key.includes("check-and-goal")){
-                idNumber=parseInt( key.substring(key.indexOf("l")+1, key.length) )+1; // this makes it so that the ordering does not go out of whack when making new nodes of checkmarks and textearea...
-                containerNode.append(userData[key]); // try to add back the old data
+    let idNumber = 1;
+    let divToRemove = null;
+
+    function checkUserData() {
+        const savedData = JSON.parse(localStorage.getItem("userData")) || [];
+        const savedWidgetsData = JSON.parse(localStorage.getItem("userDataWidgets")) || {};
+
+        containerNode.innerHTML = "";
+        idNumber = 1;
+
+        savedData.forEach(({ id, text, checked }) => {
+            add(id, text, checked);
+        });
+
+        if (savedWidgetsData) {
+            if (savedWidgetsData.suspendedAnimation) {
+                addButton.classList = savedWidgetsData.suspendedAnimation;
+            }
+            if (savedWidgetsData.className) {
+                darkAndLightNode.classList = savedWidgetsData.className;
+            }
+            if (savedWidgetsData.className && savedWidgetsData.className.includes("dark-mode")) {
+                document.body.classList.add("dark-mode");
+                darkAndLightNode.classList.add("dark-mode");
+
+                // ✅ Apply dark mode to textareas and checkboxes
+                document.querySelectorAll("input[type='checkbox'], textarea").forEach(node => {
+                    node.classList.add("dark-mode");
+                });
+
+                // ✅ Restore "yellow" class for widgets
+                if (savedWidgetsData.yellowElements) {
+                    savedWidgetsData.yellowElements.forEach(id => {
+                        const node = document.getElementById(id);
+                        if (node) node.classList.add("yellow");
+                    });
+                }
             }
         }
     }
-    checkUserData();
-    function add(){
-        let checkBoxNode= document.createElement("input");
-        let textAreaNode= document.createElement("textarea");
-        let checkAndGoalNode= document.createElement("div");
 
-        checkAndGoalNode.className="check-and-goal"; // just a simple div node or whatever... this will hold the checkbox element and the text area elements...
-        checkAndGoalNode.id="check-and-goal"+idNumber;
-        checkBoxNode.type="checkbox";
-        checkBoxNode.id="checkbox"+idNumber;
-        textAreaNode.id="goal"+idNumber;
-        idNumber++;
-        console.log(idNumber);
-       
-
-        checkAndGoalNode.append(checkBoxNode);
-        checkAndGoalNode.append(textAreaNode);
-        containerNode.append(checkAndGoalNode)
-        userData.setItem("check-and-goal"+idNumber, checkAndGoalNode); // try to add the notes to local storage object
-
-        checkAndGoalNode.addEventListener("dblclick", e=>{
-            try{checkAndGoalNode.remove();}
-            catch(err){}
-        });
-        checkAndGoalNode.addEventListener("keydown", (e)=>{
-            if (e.key=="Delete")
-                checkAndGoalNode.remove();
-            console.log(e);
-        });
-        checkAndGoalNode.addEventListener("click", e =>{
-            divToRemove=checkAndGoalNode; // this statement is the same as "this.remove" since it's referencing itself, just in case they want to remove it
-            //console.log(checkAndGoalNode);
-        });
-
+    function clearUserData() {
+        localStorage.clear();
+        containerNode.innerHTML = "";
+        idNumber = 1;
+        console.log("Cleared data");
     }
 
-    removeButton.addEventListener("click", e=>{
-        try{
-            userData.removeItem(divToRemove.id); // reomove the data from the local storage object
-            divToRemove.remove();
-            console.log(divToRemove);
+    function saveWidgetsData() {
+        const yellowElements = Array.from(document.querySelectorAll("#widgets > *"))
+            .filter(node => node.classList.contains("yellow"))
+            .map(node => node.id);
+
+        const data = {
+            className: darkAndLightNode.className,
+            suspendedAnimation: addButton.className,
+            yellowElements: yellowElements
+        };
+
+        localStorage.setItem("userDataWidgets", JSON.stringify(data));
+    }
+
+    function saveUserData() {
+        const checkAndGoalNodes = document.querySelectorAll(".check-and-goal");
+        const data = Array.from(checkAndGoalNodes).map(node => ({
+            id: parseInt(node.id.replace("check-and-goal", "")),
+            text: node.querySelector("textarea").value,
+            checked: node.querySelector("input[type='checkbox']").checked
+        }));
+        localStorage.setItem("userData", JSON.stringify(data));
+    }
+
+    function add(id = idNumber, text = "", checked = false) {
+        const checkBoxNode = document.createElement("input");
+        const textAreaNode = document.createElement("textarea");
+        const checkAndGoalNode = document.createElement("div");
+
+        checkAndGoalNode.className = "check-and-goal";
+        checkAndGoalNode.id = "check-and-goal" + id;
+
+        checkBoxNode.type = "checkbox";
+        checkBoxNode.id = "checkbox" + id;
+        checkBoxNode.className = "checkbox";
+        checkBoxNode.checked = checked;
+
+        textAreaNode.id = "goal" + id;
+        textAreaNode.className = "goal";
+        textAreaNode.value = text;
+
+        if (id === 1 && text === "") textAreaNode.placeholder = "Enter your goal here...";
+
+        checkAndGoalNode.append(checkBoxNode, textAreaNode);
+        containerNode.append(checkAndGoalNode);
+
+        idNumber = Math.max(idNumber, id + 1);
+
+        checkAndGoalNode.addEventListener("keydown", (e) => {
+            if (e.key === "Delete") {
+                checkAndGoalNode.remove();
+                saveUserData();
+            }
+        });
+
+        checkAndGoalNode.addEventListener("click", () => {
+            divToRemove = checkAndGoalNode;
+            saveUserData();
+        });
+
+        textAreaNode.addEventListener("input", saveUserData);
+        checkBoxNode.addEventListener("change", saveUserData);
+
+        // ✅ Ensure dark mode applies to new textareas if already enabled
+        if (document.body.classList.contains("dark-mode")) {
+            textAreaNode.classList.add("dark-mode");
         }
-        catch(err) {}
+
+        saveUserData();
+        saveWidgetsData();
+    }
+
+    function toggleAnimation() {
+        addButton.classList.toggle("no-animation");
+        saveWidgetsData();
+        console.log("Toggled animation");
+    }
+
+    function toggleDarkAndLight() {
+        const widgetsNodes = document.querySelector("#widgets").children;
+
+        for (const node of widgetsNodes) {
+            if (node.id !== "dark-and-light") {
+                node.classList.toggle("yellow");
+            }
+        }
+
+        document.body.classList.toggle("dark-mode");
+        darkAndLightNode.classList.toggle("dark-mode");
+
+        document.querySelectorAll("input[type='checkbox'], textarea").forEach(node => {
+            node.classList.toggle("dark-mode");
+        });
+
+        saveWidgetsData();
+        console.log("Toggled dark mode");
+    }
+
+    broomNode.addEventListener("click", clearUserData);
+    darkAndLightNode.addEventListener("click", toggleDarkAndLight);
+    noAnimationNode.addEventListener("click", toggleAnimation);
+
+    removeButton.addEventListener("click", () => {
+        if (divToRemove) {
+            divToRemove.remove();
+            saveUserData();
+        }
     });
 
-    addButton.addEventListener("click", add);
+    addButton.addEventListener("click", () => {
+        add();
+    });
 
-}
+    checkUserData();
+};
