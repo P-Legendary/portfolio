@@ -1,7 +1,28 @@
 body{
+    border: none !important;;
+    position: relative;
     text-align: center ;
     justify-content: center;
     align-items: center;
+}
+h1{
+    color: white !important;
+}
+#widgets  *:hover {
+    opacity: 0.5;
+   
+}
+#widgets{
+    float: left;
+    display: flex;
+    
+}
+#widgets  *{
+    margin-left: 55%;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: none !important;
 }
 .add-remove{
     text-align: center;
@@ -19,6 +40,9 @@ body{
 .add:hover, .remove:hover{
     filter:saturate(3);
 }
+.add:hover{
+    box-shadow: 5cap 5cap rgba(95, 212, 212, .3) , 2cap 2cap rgba(214, 12, 123, 0.3), -5cap -5cap rgba(129, 138, 14, 0.3) , -2cap -2cap rgba(251, 255, 0, .3), 5cap -5cap rgba(0, 0, 0, .3) , 2cap -2cap rgba(201, 201, 240, .3);
+}
 .add{
     background-color: lightgreen;
     margin-right: 30%;
@@ -32,22 +56,71 @@ body{
     display: grid;
     grid-template-columns: auto auto;
 }
-#checkbox, #goal{
-    margin-left: 50px;
+.checkbox, .goal{
+    margin-left: 10px;
+    margin-top: 20%;
 }
 /* Increase the size of the checkbox */
+/* Style the checkbox */
 input[type="checkbox"] {
-    /* Set the desired width and height */
     width: 60px;
     height: 60px;
     margin-top: 60px;
-  }
+    appearance: none; /* Remove default styling */
+    background-color: rgba(143, 132, 132, 0.1); /* Background color when unchecked */
+    border: 2px solid #ccc; /* Border color */
+    border-radius: 10px; /* Rounded corners */
+    cursor:pointer; /* Pointer cursor on hover */
+}
+
+/* Style the checkbox when checked */
+input[type="checkbox"]:checked {
+    background-color: #4CAF50; /* Background color when checked */
+    border-color: #4CAF50; /* Border color when checked */
+}
+
+/* Optional: Add a checkmark icon when checked */
+input[type="checkbox"]:checked::after {
+    content: '✔'; /* Unicode character for checkmark */
+    color: green; /* Color of the checkmark */
+    font-size: 40px; /* Size of the checkmark */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
   #goal{
     font-size: xx-large;
     height: 50px;
     width: 600px;
   }
 
-  @media only screen and (max-width: 600px){
-    body{scale: 2;}
-  }
+.no-animation:hover{
+    box-shadow: none;
+    /*background-color: tomato; */
+}
+.dark-mode{
+    background-color: black;
+    color: rgb(40, 132, 212);
+   
+}
+.yellow{
+    background-color: rgba(255, 231, 15, 0.5);
+    border-radius: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    #widgets {
+        float: right;
+        position: absolute;
+        margin-top: 50px;
+        left: 100%;
+        background-color: black;
+    }
+    .add-remove {
+        margin-top: 500px;
+    }
+    h1 {
+        display: none;
+    }
+}

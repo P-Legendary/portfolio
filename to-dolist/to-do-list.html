@@ -1,18 +1,23 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
     <head>
         <title> My To Do</title>
-        <script src="to-do-list.js" ></script>
+        <script src="to-do-list.js" defer ></script>
         <link rel="stylesheet" href="to-do-list.css">
     </head>
-    <body>
+    <body id="body">
+        <div id="widgets">
+            <img id="dark-and-light" src="images/lightbulb-svgrepo-com.svg" alt="Dark And Light Mode" onerror="this.style.display='none'">
+            <img id="broom" src="images/broom-svgrepo-com.svg" alt="Broom" onerror="this.style.display='none'">
+            <img id="suspended-animation" src="images/robot-arm-1-svgrepo-com.svg" alt="No Animation" onerror="this.style.display='none'">
+        </div>
         <div class="add-remove">
             <h1> My To Do List</h1>
             <button class="add" id="add">Add</button>
             <button class="remove" id="remove">Remove</button>
         </div>
         <div class="container" id="container">
-            
+            <!-- Content will be added here -->
         </div>
     </body>
 </html>
