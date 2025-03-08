@@ -6,7 +6,7 @@ body{
     align-items: center;
 }
 h1{
-    color: white !important;
+    color: rgb(231, 178, 3) !important;
 }
 #widgets  *:hover {
     opacity: 0.5;
@@ -39,6 +39,7 @@ h1{
 }
 .add:hover, .remove:hover{
     filter:saturate(3);
+    cursor: pointer;
 }
 .add:hover{
     box-shadow: 5cap 5cap rgba(95, 212, 212, .3) , 2cap 2cap rgba(214, 12, 123, 0.3), -5cap -5cap rgba(129, 138, 14, 0.3) , -2cap -2cap rgba(251, 255, 0, .3), 5cap -5cap rgba(0, 0, 0, .3) , 2cap -2cap rgba(201, 201, 240, .3);
